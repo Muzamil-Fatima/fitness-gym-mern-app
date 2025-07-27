@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Hanson";
+  src: url(".Hanson-Bold.otf") format("truetype");
+  font-weight: bold;
+}
+:root {
+  --font-primary: "Hanson", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+
+  --color-primary: #f15c36;
+  --color-dark: #272727;
+  --color-darked: #121212;
+  --color-darker: #191919;
+  --color-light: #f1f1f1;
+  --color-white: #ffffff;
+  --color-red: #FF0004;
+  --color-gray: #8E8E8E;
+
+}
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+.font-primary {
+  font-family: var(--font-primary);
+}
+
