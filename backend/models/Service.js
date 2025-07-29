@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import sequence from "mongoose-sequence";
+import { type } from "os";
 
 // create connection from
 
@@ -18,6 +19,7 @@ const servicesSchema = new mongoose.Schema({
     trim: true,
     maxLength: 1200,
   },
+  status: { type: String, enum: ["Active ", "draft"], default: "Active" },
 });
 // auto increment apply to userId
 servicesSchema.plugin(AutoIncrease, { inc_field: "servicesId" });
