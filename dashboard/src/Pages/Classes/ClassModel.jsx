@@ -32,7 +32,7 @@ export default function ClassModel({ isOpen, onClose }) {
     formData.append("image", selectedFile);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData);
+      const res = await axios.post("http://localhost:3000/upload", formData);
       alert("Uploaded successfully");
       console.log(res.data);
     } catch (error) {
@@ -82,19 +82,21 @@ export default function ClassModel({ isOpen, onClose }) {
       ></textarea>
       <div className="flex gap-4">
         {inputFields.map((field, index) => (
-          <div key={index}>
+          <div key={index} className="relative  w-[250px] h-[77px]">
             <input
+            id={`file-${index}`}
               onChange={(e) => handleFileChange(e, index)}
               type="file"
               accept="image/*"
               placeholder={field.placeholder}
-              className="border border-[var(--color-white)]/15 rounded-[15px] w-1/3 h-[77px] text-center"
+              className="border border-[var(--color-white)]/15 rounded-[15px] w-[250px] h-[77px] text-center"
             />
+            <label htmlFor={`file-${index}`}>{field.placeholder}</label>
             {fileData[index].preview && (
               <img
                 src={fileData[index].preview}
                 alt={picture}
-                className="w-40 h-40 object-cover rounded"
+                className=" absolute inset-0 w-[250px] h-[77px] object-cover rounded"
               />
             )}
           </div>

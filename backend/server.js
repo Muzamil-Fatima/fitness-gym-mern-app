@@ -1,13 +1,15 @@
 import express from "express";
-import connectDB from "../backend/config/database.js";
-import userRoutes from "../backend/routes/userRoutes.js";
-import servicesRoute from "../backend/routes/servicesRoutes.js";
+import connectDB from "./config/database.js"
+import classRouter from "./routes/classRoutes.js"
+// import userRoutes from "../backend/routes/userRoutes.js";
+import servicesRoute from "./routes/servicesRoutes.js";
 
 const app = express();
 
 // Routes
-app.use("/api/users", userRoutes);
+// app.use("/api/users", userRoutes);
 app.use("/api/services", servicesRoute);
+app.use("/api/classes", classRouter);
 // server listen
 const DATABASE_URL =
   process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/fitness";

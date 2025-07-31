@@ -26,3 +26,5 @@ servicesSchema.plugin(AutoIncrease, { inc_field: "servicesId" });
 
 // create model
 const Services = mongoose.model("Services", servicesSchema);
+
+export default Services;

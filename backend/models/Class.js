@@ -1,28 +1,37 @@
 import mongoose from "mongoose";
-import sequence from "mongoose-sequence";
+import sequence from "mongoose";
+import AutoIncrementFactory from "mongoose-sequence";
 
-// create connection
+// Get connection
 const connection = mongoose.connection;
-const AutoIncrease = sequence(mongoose);
+const AutoIncrement = AutoIncrementFactory(mongoose);
 
 // Define Schema
 const classSchema = new mongoose.Schema({
   classId: { type: Number },
   classTitle: { type: String, required: [true, "Title is required"] },
+  classBanner: { type: String },
   classImage1: { type: String },
   classImage2: { type: String },
-  classBanner: { type: String },
   classDescription: {
     type: String,
     required: true,
     maxLength: 615,
     trim: true,
   },
-  classAvailability: { type: dropDown },
+  classAvailability: {
+    type: String,
+    required: true,
+    trim: true,
+  },
 });
 
-// auto increase applying to class ID
-classSchema.plugin(AutoIncrease, { inc_field: "classId" });
-
+// Apply plugin for auto-increment
+classSchema.plugin(AutoIncrement, {
+  inc_field: "classId",
+  id: "classId_counter",
+  start_seq: 1,
+});
 // create model
 const Classes = mongoose.model("Classes", classSchema);
+export default Classes;
