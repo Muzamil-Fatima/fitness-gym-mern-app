@@ -5,7 +5,7 @@ export default function ProfileDetails() {
         Profile Details
       </h6>
       <div className="text-[13px] font-medium border border-[var(--color-white)]/15 rounded-[15px] w-5/6 mt-26">
-        <table className="w-full border-collapse  table-fixed">
+        <table className="w-full border-collapse table-fixed">
           <thead>
             <tr className="border-b border-[var(--color-white)]/15 text-left">
               <th className="px-4 py-4.5">Name</th>
