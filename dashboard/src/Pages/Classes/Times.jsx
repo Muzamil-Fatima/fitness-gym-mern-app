@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import image from "../../images/sort-down.png";
+import image from "../../../Icons/sort-down.png"
 
 export default function Times() {
   const [isOpen, setIsOpen2] = useState(false);

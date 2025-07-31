@@ -21,7 +21,7 @@ const servicesSchema = new mongoose.Schema({
   },
   status: { type: String, enum: ["Active ", "draft"], default: "Active" },
 });
-// auto increment apply to userId
+// auto increment apply to Service Id
 servicesSchema.plugin(AutoIncrease, { inc_field: "servicesId" });
 
 // create model
