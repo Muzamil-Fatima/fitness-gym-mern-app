@@ -1,5 +1,6 @@
 import arrowImage from "../../../images/top-bottom-arrow.jpg";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import ArrowColumn from "../../Components/ArrowColumn";
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -69,9 +70,9 @@ export default function Services() {
         </div>
       </div>
       <div className="flex justify-center m-6">
-        <button className="h-[70px] w-[200px]  border-2 border-dashed border-[var(--color-primary)] rounded-[14px] m-2 hover:bg-[var(--color-primary)] hover:border-none">
+    <NavLink to="/services">  <button className="h-[70px] w-[200px]  border-2 border-dashed border-[var(--color-primary)] rounded-[14px] m-2 hover:bg-[var(--color-primary)] hover:border-none">
           Learn More
-        </button>
+        </button></NavLink>  
       </div>
     </div>
   );
