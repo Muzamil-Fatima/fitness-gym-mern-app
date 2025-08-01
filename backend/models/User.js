@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     profileImage: {
       type: String,
+      required: false,
     },
     status: { type: String, enum: ["Finished", "Active"], default: "Active" },
   },

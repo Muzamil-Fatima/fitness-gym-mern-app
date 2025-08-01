@@ -6,39 +6,50 @@ export default function SignUp({ switchForm }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!name || !email || !password || !confirmPassword)
-      return alert("All field required");
-    if (password.length < 6)
-      return alert("Password must beat least 6 character");
-    if (password !== confirmPassword) return alert("Passwords do not match");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await axios.post("http://localhost:8000/api/users/register", {
-        name,
-        password,
-        email,
-      });
-      alert(`${name} registered successfully!`);
-      console.log(res.data);
-      // reset field
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-    } catch (error) {
-      const backendMessage = error.response?.data?.message;
+  if (!name || !email || !password || !confirmPassword)
+    return alert("All fields are required");
+  if (password.length < 6)
+    return alert("Password must be at least 6 characters");
+  if (password !== confirmPassword) return alert("Passwords do not match");
 
-      if (backendMessage === "User already exists") {
-        alert("This email is already registered. Please try another.");
-      } else if (backendMessage === "Server Error") {
-        alert("Something went wrong on the server.");
-      } else {
-        alert("Unknown error occurred.");
-      }
+  try {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    // If you have a profile image later:
+    // formData.append("profileImage", file);
+
+    const res = await axios.post("http://localhost:8000/api/users/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert(`${name} registered successfully!`);
+    console.log(res.data);
+
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  } catch (error) {
+    const backendMessage = error.response?.data?.message;
+
+    if (backendMessage === "User already exists") {
+      alert("This email is already registered.");
+    } else if (backendMessage === "Server Error") {
+      alert("Something went wrong on the server.");
+    } else {
+      console.error(error);
+      alert("Unknown error occurred.");
     }
-  };
+  }
+};
+
   return (
     <form onSubmit={handleSubmit} action="post">
       <div className="font-secondary pr-10 pl-10">
