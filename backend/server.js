@@ -1,13 +1,13 @@
 import express from "express";
 import connectDB from "./config/database.js"
 import classRouter from "./routes/classRoutes.js"
-// import userRoutes from "../backend/routes/userRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import servicesRoute from "./routes/servicesRoutes.js";
 
 const app = express();
 
 // Routes
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/services", servicesRoute);
 app.use("/api/classes", classRouter);
 // server listen
