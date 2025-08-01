@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import sequence from "mongoose";
-import AutoIncrementFactory from "mongoose-sequence";
+import AutoIncrementFactory from 'mongoose-sequence';
 
 // Get connection
 const connection = mongoose.connection;
@@ -25,13 +24,8 @@ const classSchema = new mongoose.Schema({
     trim: true,
   },
 });
-
-// Apply plugin for auto-increment
-classSchema.plugin(AutoIncrement, {
-  inc_field: "classId",
-  id: "classId_counter",
-  start_seq: 1,
-});
+// Apply auto-increment plugin to classId
+classSchema.plugin(AutoIncrement, { inc_field: "classId" });
 // create model
 const Classes = mongoose.model("Classes", classSchema);
 export default Classes;

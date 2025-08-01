@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import sequence from "mongoose-sequence";
-import { type } from "os";
+import mongooseSequence from "mongoose-sequence";
+
 
 // create connection from
 
 const connection = mongoose.connection;
-const AutoIncrease = sequence(mongoose);
+const AutoIncrement = mongooseSequence(mongoose);
 
 // Define schema
 const servicesSchema = new mongoose.Schema({
@@ -19,10 +19,10 @@ const servicesSchema = new mongoose.Schema({
     trim: true,
     maxLength: 1200,
   },
-  status: { type: String, enum: ["Active ", "draft"], default: "Active" },
+  status: { type: String, enum: ["Active", "draft"], default: "Active" },
 });
 // auto increment apply to Service Id
-servicesSchema.plugin(AutoIncrease, { inc_field: "servicesId" });
+servicesSchema.plugin(AutoIncrement, { inc_field: "servicesId" });
 
 // create model
 const Services = mongoose.model("Services", servicesSchema);
