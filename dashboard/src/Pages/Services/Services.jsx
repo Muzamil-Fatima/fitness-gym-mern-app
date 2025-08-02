@@ -8,15 +8,16 @@ import axios from "axios";
 
 export default function Services() {
   const [services, setServices] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(services.length / rowsPerPage);
 
   //   Data paginate
-  const paginatedClients = Array.isArray(services)
-    ? services.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)
-    : [];
+  const paginatedServices = services.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
   //  get data from api
   useEffect(() => {
@@ -39,8 +40,13 @@ export default function Services() {
         <div className="flex py-4 px-2 items-center justify-between border-b-[1px] border-b-[var(--color-white)]/15">
           <div className="text-[16px]">List</div>
           <div className="flex gap-3 items-center justify-end">
-            <p className="text-[14px]">
-              1-4 <span className="opacity-20">of 4</span>
+            <p>
+              {(currentPage - 1) * rowsPerPage + 1}-
+              {Math.min(currentPage * rowsPerPage, services.length)}{" "}
+              <span className="opacity-20">
+                of
+                {services.length}
+              </span>
             </p>
           </div>
         </div>
@@ -80,14 +86,14 @@ export default function Services() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedClients.length === 0 ? (
+                {paginatedServices.length === 0 ? (
                   <tr>
                     <td colSpan="4" className="text-center py-6 text-red-500">
                       No services found.
                     </td>
                   </tr>
                 ) : (
-                  paginatedClients.map((service, index) => (
+                  paginatedServices.map((service, index) => (
                     <tr
                       key={service.id}
                       className={`border-b-[1px] border-b-[var(--color-white)]/15 text-[13px] font-medium
@@ -116,14 +122,13 @@ export default function Services() {
                         </button>
                       </td>
                       <td className="pl-6 py-3">
-                        <button >
+                        <button>
                           <svg
                             width="24"
                             height="24"
                             viewBox="0 0 19 19"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            
                           >
                             <g opacity="0.5">
                               <path
@@ -142,7 +147,7 @@ export default function Services() {
           </div>
         </div>
       </div>
-      <div className="mt-6 mb-6 mr-12 ml-2  flex justify-between">
+      <div className="mt-6 mb-6 mr-12 ml-2 flex justify-between">
         <p>
           {(currentPage - 1) * rowsPerPage + 1}-
           {Math.min(currentPage * rowsPerPage, services.length)} of{" "}
@@ -161,6 +166,7 @@ export default function Services() {
               id=""
               className="ml-1.5 bg-[var(--color-darker)] h-[26px] w-[42px] border-[1px] border-[var(--color-white)]/15 mr-6"
             >
+              <option value={4}>4</option>
               <option value={5}>5</option>
             </select>
           </p>
@@ -171,8 +177,8 @@ export default function Services() {
               src={arrow}
               alt="previous"
               className={`bg-[var(--color-darker)] h-[26] w-[26px] border-[1px] border-[var(--color-white)]/15 rotate-180
-                ${currentPage === 1 ? "opacity-30 cursor-not-allowed" : ""}
-                `}
+                   ${currentPage === 1 ? "opacity-30 cursor-not-allowed" : ""}
+                   `}
             />
             <img
               onClick={() =>
@@ -182,12 +188,12 @@ export default function Services() {
               src={arrow}
               alt="next"
               className={`bg-[var(--color-darker)] h-[26] w-[26px] border-[1px] border-[var(--color-white)]/15 
-                ${
-                  currentPage === totalPages
-                    ? "opacity-30 cursor-not-allowed"
-                    : ""
-                }
-                `}
+                   ${
+                     currentPage === totalPages
+                       ? "opacity-30 cursor-not-allowed"
+                       : ""
+                   }
+                   `}
             />
           </div>
         </div>
