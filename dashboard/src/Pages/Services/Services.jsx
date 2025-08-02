@@ -1,34 +1,46 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Search from "../../Component/Search";
-import arrow from "../../../Icons/arrow-up.svg";
-import group from "../../../Icons/group.svg";
+// import arrow from "../../../Icons/arrow-up.svg";
+// import group from "../../../Icons/group.svg";
 import NewServices from "./NewServices";
+// import { BASE_URL } from "../../../Utils/api";
 
 export default function Services() {
-  const [services, setServices] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [services, setServices] = useState([]);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(services.length / rowsPerPage);
+  // const totalPages = Math.ceil(services.length / rowsPerPage);
 
-  //   Data paginate
-  const paginatedClients = services.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  // //   Data paginate
+  // const paginatedClients = services.slice(
+  //   (currentPage - 1) * rowsPerPage,
+  //   currentPage * rowsPerPage
+  // );
   //  get data from api
-  useEffect(() => {
-    fetch("http://localhost:3000/services")
-      .then((response) => response.json())
-      .then((data) => setServices(data))
-      .catch((error) => console.error("Error fetching clients: ", error));
-  }, []);
+// useEffect(() => {
+//   fetch(`${BASE_URL}/api/services`)
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//       }
+//       return response.json();
+//     })
+//     .then((data) => {
+//       console.log("Fetched services:", data); // ✅ helpful log
+//       setServices(data);
+//     })
+//     .catch((error) => {
+//       console.error("❌ Error fetching services:", error.message);
+//     });
+// }, []);
+
 
   return (
     <div className="font-secondary font-medium text-[13px] mr-4">
       <h2 className="font-bold text-[40px]  mt-2 ">Services</h2>
       <Search />
-      <div className="mt-2  border-[1px] border-[var(--color-white)]/15 rounded-[15px] ">
+      {/* <div className="mt-2  border-[1px] border-[var(--color-white)]/15 rounded-[15px] ">
         <div className="flex py-2 px-2 items-center justify-between border-b-[1px] border-b-[var(--color-white)]/15">
           <div className="text-[16px]">List</div>
           <div className="flex gap-3 items-center justify-end">
@@ -108,8 +120,8 @@ export default function Services() {
             </table>
           </div>
         </div>
-      </div>
-      <div className="mt-6 mb-6 flex justify-between">
+      </div> */}
+      {/* <div className="mt-6 mb-6 flex justify-between">
         <p>
           {(currentPage - 1) * rowsPerPage + 1}-
           {Math.min(currentPage * rowsPerPage, services.length)} of{" "}
@@ -158,7 +170,7 @@ export default function Services() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <NewServices />
     </div>
   );

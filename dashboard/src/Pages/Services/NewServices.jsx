@@ -1,12 +1,46 @@
 import add from "../../../Icons/add.svg";
+import axios from "axios";
 import { useState } from "react";
+import { BASE_URL } from "../../../Utils/api.js";
 export default function NewServices() {
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  // handel data states
+  const [serviceName, setServiceName] = useState("");
+  const [serviceDes, setServiceDes] = useState("");
+  const [serviceIcon, setServiceIcon] = useState(null);
+  const [serviceImage, setServiceImage] = useState(null);
+  const serviceStatus = "Active";
+
+  // call api
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const details = new FormData();
+    details.append("servicesName", serviceName);
+    details.append("servicesDescription", serviceDes);
+    details.append("servicesIcon", serviceIcon);
+    details.append("servicesImage", serviceImage);
+    details.append("status", serviceStatus);
+
+    try {
+      const res = await axios.post(`${BASE_URL}/api/services`, details, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Service created: ", res.data);
+    } catch (error) {
+      console.log("Error: ", error.response?.data || error.message);
+    }
+  };
+
   const handleIconChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
+      setServiceIcon(file);
       setPreview(URL.createObjectURL(file));
     } else {
       setPreview(null);
@@ -15,6 +49,7 @@ export default function NewServices() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
+      setServiceImage(file);
       setSelectedFile(URL.createObjectURL(file));
     } else {
       setSelectedFile(null);
@@ -61,6 +96,8 @@ export default function NewServices() {
             </label>
           </div>
           <input
+            value={serviceName}
+            onChange={(e) => setServiceName(e.target.value)}
             type="text"
             placeholder="Enter New Service Name"
             className="h-[55px] p-3  border-[1px] border-[var(--color-white)]/15 rounded-[15px] mb-3"
@@ -90,7 +127,6 @@ export default function NewServices() {
                   </svg>
                 </>
               )}
-
               <input
                 onChange={handleImageChange}
                 type="file"
@@ -101,6 +137,8 @@ export default function NewServices() {
             </label>
           </div>
           <textarea
+            value={serviceDes}
+            onChange={(e) => setServiceDes(e.target.value)}
             placeholder="Description"
             name=""
             id=""
@@ -108,7 +146,10 @@ export default function NewServices() {
           ></textarea>
         </div>
         <div>
-          <button className="w-[224px] h-[55px] rounded-[15px] bg-[var(--color-primary)] flex justify-center items-center">
+          <button
+            onClick={handleSubmit}
+            className="w-[224px] h-[55px] rounded-[15px] bg-[var(--color-primary)] flex justify-center items-center"
+          >
             <img src={add} className="h-6 w-6" />{" "}
             <span className="text-[16px] ml-1.5">Add</span>
           </button>
