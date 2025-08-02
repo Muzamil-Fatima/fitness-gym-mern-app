@@ -33,7 +33,7 @@ export default function NewServices() {
       });
       alert("Service created: ", res.data);
     } catch (error) {
-      console.log("Error: ", error.response?.data || error.message);
+      alert("Error: ", error.response?.data || error.message);
     }
   };
 
