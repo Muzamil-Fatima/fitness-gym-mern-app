@@ -3,12 +3,14 @@ import Classes from "../models/Class.js";
 // createClasses
 export const createClasses = async (req, res) => {
   try {
-    const { classTitle, classDescription, classAvailability} = req.body;
+    const { classTitle, classDescription, classAvailability, status } =
+      req.body;
 
     const newClass = new Classes({
       classTitle,
       classDescription,
       classAvailability,
+      status,
       classBanner: req.files["classBanner"][0].path,
       classImage1: req.files["classImage1"][0].path,
       classImage2: req.files["classImage2"][0].path,

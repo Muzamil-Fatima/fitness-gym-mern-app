@@ -8,7 +8,7 @@ export default function Classes() {
 
   return (
     <div className="font-secondary font-medium text-[13px] mr-4">
-      <h2 className="font-bold text-[40px]  mt-2 ">Appointments</h2>
+      <h2 className="font-bold text-[40px]  mt-2 ">Classes</h2>
       <div className="flex justify-between mr-8 mt-6 items-center">
         <Search />
         <div className="relative">

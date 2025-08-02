@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import AutoIncrementFactory from 'mongoose-sequence';
+import AutoIncrementFactory from "mongoose-sequence";
 
 // Get connection
 const connection = mongoose.connection;
@@ -23,6 +23,7 @@ const classSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  status: { type: String, enum: ["Active", "draft"], default: "Active" },
 });
 // Apply auto-increment plugin to classId
 classSchema.plugin(AutoIncrement, { inc_field: "classId" });
