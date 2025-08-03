@@ -2,11 +2,13 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import Logo from "../../images/Logo.svg";
 import cart from "../../images/cart.svg";
-import user from "../../images/user.svg";
+import users from "../../images/user.svg";
 
 export default function NavBar({ userIcon }) {
-  const [isOpen, setIsOpen] = useState(false);
+  // const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const [user, setUser] = useState();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -16,6 +18,11 @@ export default function NavBar({ userIcon }) {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) setUser(storedUser);
   }, []);
 
   return (
@@ -78,7 +85,20 @@ export default function NavBar({ userIcon }) {
           </ul>
           <div className="flex-1 flex justify-end space-x-4">
             <img src={cart} alt="cart" className="h-8 w-8" />
-            <img onClick={userIcon} src={user} alt="user" className="h-8 w-8" />
+            {user ? (
+              <NavLink to="/profile">
+              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--color-primary)] font-normal text-white cursor-pointer">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              </NavLink>
+            ) : (
+              <img
+                onClick={userIcon}
+                src={users}
+                alt="user"
+                className="h-8 w-8"
+              />
+            )}
           </div>
         </div>
       </div>

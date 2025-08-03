@@ -14,21 +14,24 @@ import MyServices from "./Pages/Services/MyServices";
 import ServicesDetails from "./Pages/Services/ServicesDetails";
 import AuthModal from "./Pages/Auth/AuthModal";
 import { useState, useEffect } from "react";
+import UserProfile from "./Pages/Auth/UserProfile";
 
 function App() {
   const [authIsOpen, setAuthIsOpen] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAuthIsOpen(true);
-    }, 4000);
-    return () => clearTimeout(timer);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      const timer = setTimeout(() => {
+        setAuthIsOpen(true);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
   }, []);
   return (
     <div className="bg-[var(--color-dark)] text-[var(--color-white)] min-h-screen w-full font-primary m-0 p-0">
       <NavBar userIcon={() => setAuthIsOpen(true)} />
       {authIsOpen && <AuthModal onClose={() => setAuthIsOpen(false)} />}
       <Routes>
-        {/* <Route path="/" element={<NavBar />}> */}
         <Route index element={<Home />} />
 
         <Route path="about">
@@ -55,6 +58,7 @@ function App() {
         <Route path="services" element={<MyServices />} />
         <Route path="services/:id" element={<ServicesDetails />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="profile" element={<UserProfile />} />
         {/* </Route> */}
       </Routes>
       <Footer />

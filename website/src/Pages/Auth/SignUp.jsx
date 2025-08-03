@@ -1,54 +1,62 @@
 import axios from "axios";
 import { useState } from "react";
 import logo from "../../../images/Logo.svg";
+import { useNavigate } from "react-router-dom";
 export default function SignUp({ switchForm }) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!name || !email || !password || !confirmPassword)
-    return alert("All fields are required");
-  if (password.length < 6)
-    return alert("Password must be at least 6 characters");
-  if (password !== confirmPassword) return alert("Passwords do not match");
+    if (!name || !email || !password || !confirmPassword)
+      return alert("All fields are required");
+    if (password.length < 6)
+      return alert("Password must be at least 6 characters");
+    if (password !== confirmPassword) return alert("Passwords do not match");
 
-  try {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    // If you have a profile image later:
-    // formData.append("profileImage", file);
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      // If you have a profile image later:
+      // formData.append("profileImage", file);
 
-    const res = await axios.post("http://localhost:8000/api/users/", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+      const res = await axios.post(
+        "http://localhost:8000/api/users/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    alert(`${name} registered successfully!`);
-    console.log(res.data);
+      alert(`Welcome ${name} Lenka Coach!`);
+      console.log(res.data);
+      localStorage.setItem("user", JSON.stringify({ name, email }));
+      navigate("/");
 
-    setName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-  } catch (error) {
-    const backendMessage = error.response?.data?.message;
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      const backendMessage = error.response?.data?.message;
 
-    if (backendMessage === "User already exists") {
-      alert("This email is already registered.");
-    } else if (backendMessage === "Server Error") {
-      alert("Something went wrong on the server.");
-    } else {
-      console.error(error);
-      alert("Unknown error occurred.");
+      if (backendMessage === "User already exists") {
+        alert("This email is already registered.");
+      } else if (backendMessage === "Server Error") {
+        alert("Something went wrong on the server.");
+      } else {
+        console.error(error);
+        alert("Unknown error occurred.");
+      }
     }
-  }
-};
+  };
 
   return (
     <form onSubmit={handleSubmit} action="post">
