@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import logo from "../../../images/Logo.svg";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../Utils/api.js";
 export default function SignUp({ switchForm }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -26,7 +27,7 @@ export default function SignUp({ switchForm }) {
       // formData.append("profileImage", file);
 
       const res = await axios.post(
-        "http://localhost:8000/api/users/",
+        `${BASE_URL}/api/users/ `,
         formData,
         {
           headers: {

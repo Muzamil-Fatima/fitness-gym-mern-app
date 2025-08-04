@@ -14,7 +14,6 @@ export default function NewServices() {
   const serviceStatus = "Active";
 
   // call api
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
