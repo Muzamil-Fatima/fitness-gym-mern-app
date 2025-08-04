@@ -1,23 +1,23 @@
 import arrowImage from "../../../images/top-bottom-arrow.jpg";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../../Utils/api";
 import ArrowColumn from "../../Components/ArrowColumn";
 export default function Services() {
   const [services, setServices] = useState([]);
 
-  const url = "http://localhost:3000/services";
-  useEffect(() => {
-    getUserData();
+ useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/services`);
+        setServices(res.data.data);
+      } catch (error) {
+        alert("Error:" + (error.response?.data?.message || error.message));
+      }
+    };
+    fetchServices();
   }, []);
-  const getUserData = async () => {
-    try {
-      let response = await fetch(url);
-      response = await response.json();
-      setServices(response);
-    } catch (error) {
-      console.log("Error Fetching users:", error);
-    }
-  };
   const total = services.length;
   const mid = Math.ceil(total / 2);
   const leftColumn = services.slice(0, mid);
@@ -39,12 +39,12 @@ export default function Services() {
             >
               <span className="h-[130px] w-[130px] rounded-[50%] bg-[var(--color-black)]">
                 <img
-                  src={service.icon}
+                 src={`${BASE_URL}/${service.servicesIcon}`}
                   alt="icon"
                   className="w-[155px] h-[108px]"
                 />
               </span>
-              <h3 className="ml-3">{service.title}</h3>
+              <h3 className="ml-3">{service.servicesName}</h3>
             </div>
           ))}
         </div>
@@ -59,12 +59,12 @@ export default function Services() {
             >
               <span className="h-[130px] w-[130px] rounded-[50%] bg-[var(--color-black)]">
                 <img
-                  src={service.icon}
+                  src={`${BASE_URL}/${service.servicesIcon}`}
                   alt="icon"
                   className="w-[155px] h-[108px]"
                 />
               </span>
-              <h3 className="ml-3">{service.title}</h3>
+              <h3 className="ml-3">{service.servicesName}</h3>
             </div>
           ))}
         </div>

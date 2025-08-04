@@ -3,23 +3,23 @@ import ArrowColumn from "../../Components/ArrowColumn";
 import Consultation from "../../Components/Consultation";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { BASE_URL } from "../../../Utils/api";
+import axios from "axios";
 
 export default function MyServices() {
   const [services, setServices] = useState([]);
 
-  const url = "http://localhost:3000/services";
   useEffect(() => {
-    getUserData();
+    const fetchServices = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/services`);
+        setServices(res.data.data);
+      } catch (error) {
+        alert("Error:" + (error.response?.data?.message || error.message));
+      }
+    };
+    fetchServices();
   }, []);
-  const getUserData = async () => {
-    try {
-      let response = await fetch(url);
-      response = await response.json();
-      setServices(response);
-    } catch (error) {
-      console.log("Error Fetching users:", error);
-    }
-  };
   const total = services.length;
   const mid = Math.ceil(total / 2);
   const leftColumn = services.slice(0, mid);
@@ -41,14 +41,14 @@ export default function MyServices() {
             >
               <div className="w-1/3">
                 <img
-                  src={service.image}
+                  src={`${BASE_URL}/${service.servicesImage}`}
                   alt="icon"
                   className="w-[136px] h-[136px] rounded-[50%]"
                 />
               </div>
               <div className="w-2/3">
                 <NavLink to={`/services/${service.id}`}>
-                  <h3 className="ml-3 text-[32px]">{service.title}</h3>
+                  <h3 className="ml-3 text-[32px]">{service.servicesName}</h3>
                 </NavLink>
               </div>
             </div>
@@ -65,14 +65,14 @@ export default function MyServices() {
             >
               <div className="w-1/3">
                 <img
-                  src={service.image}
+                   src={`${BASE_URL}/${service.servicesImage}`}
                   alt="icon"
                   className="w-[136px] h-[136px] rounded-[50%]"
                 />
               </div>
               <div className="w-2/3">
                 <NavLink to={`/services/${service.id}`}>
-                  <h3 className="ml-3 text-[32px]">{service.title}</h3>
+                  <h3 className="ml-3 text-[32px]">{service.servicesName}</h3>
                 </NavLink>
               </div>
             </div>
