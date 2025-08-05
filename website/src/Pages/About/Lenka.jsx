@@ -1,5 +1,6 @@
 import AboutWrapper from "../../Components/AboutWrapper";
 import Consultation from "../../Components/Consultation";
+import CustomDate from "../../Components/CustomDate";
 
 export default function Lenka() {
   return (
