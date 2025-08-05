@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import image from "../../images/sort-down.png";
 
-export default function DropDown() {
+export default function DropDown({ availability }) {
   const [isOpen1, setIsOpen1] = useState(false);
   const [selected, setSelected] = useState("Select any Option ");
   const options = [
@@ -30,7 +30,7 @@ export default function DropDown() {
   return (
     <div className="font-medium text-xl flex gap-2 font-secondary">
       <div>
-        <div className="dropdown w-[370px] h-[55px] rounded-xl bg-[var(--color-darker)] flex justify-between items-center px-4">
+        <div className="relative dropdown w-[370px] h-[55px] rounded-xl bg-[var(--color-darker)] flex justify-between items-center px-4">
           {selected}
           <img
             className={` w-6 h-6 cursor-pointer transition-transform duration-300 ${
@@ -42,7 +42,7 @@ export default function DropDown() {
           />
         </div>
         {isOpen1 && (
-          <div className="mt-3 rounded-2xl">
+          <div className="absolute mt-3 rounded-2xl">
             {options.map((option, index) => {
               return (
                 <div
@@ -61,8 +61,8 @@ export default function DropDown() {
         )}
       </div>
       <div>
-        <div className="dropdown w-[220px] h-[55px] rounded-xl bg-[var(--color-darker)] flex justify-between items-center px-4 ">
-          {isTime}
+        <div className="relative dropdown w-[220px] h-[55px] rounded-xl bg-[var(--color-darker)]   flex justify-between items-center px-4 ">
+          {availability ? availability : isTime}
           <img
             className={`w-6 h-6 cursor-pointer transition-transform duration-300 ${
               isOpen2 ? "rotate-180" : "rotate-0"
@@ -73,15 +73,21 @@ export default function DropDown() {
           />
         </div>
         {isOpen2 && (
-          <div className="mt-3 rounded-2xl">
+          <div className="absolute mt-3 rounded-2xl">
             {times.map((time, index) => {
               return (
                 <div
-                  className="dropdown bg-[var(--color-darker)] w-[223px] px-4 py-3 hover:border-[var(--color-primary)] hover:border-2  border-dashed hover:border-rounded-2xl cursor-pointer"
+                  className="dropdown bg-[var(--color-darker)] w-[223px] px-4 py-3 hover:border-[var(--color-primary)] hover:border-2  border-dashed hover:rounded-2xl cursor-pointer"
                   key={index}
                   onClick={() => {
-                    setIsTime(time);
-                    setIsOpen2(false);
+                    if (availability) {
+                      alert(
+                        "⛔ This time is set by admin. For custom timing, please call or visit the center."
+                      );
+                    } else {
+                      setIsTime(time);
+                      setIsOpen2(false);
+                    }
                   }}
                 >
                   {time}

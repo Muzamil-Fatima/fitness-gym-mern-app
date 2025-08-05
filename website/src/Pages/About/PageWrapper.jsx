@@ -39,7 +39,7 @@ export default function PageWrapper() {
       <div className="grid grid-cols-2 gap-4 mt-8 mb-12">
         <div className="">
           <div className="mb-8">
-            <DropDown />
+            <DropDown  availability={classData.classAvailability}/>
           </div>
           <span className="font-secondary text-[64px] font-semibold uppercase">
             1 HOUR
