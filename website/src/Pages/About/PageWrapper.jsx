@@ -1,15 +1,11 @@
 import ArrowRow from "../../Components/ArrowRow";
-import Consultation from "../../Components/Consultation";
 import DropDown from "../../Components/DropDown";
 import BookNow from "./BookNow";
 
 export default function PageWrapper({
   title1,
   title2,
-  para1,
-  para2,
-  para3,
-  para4,
+  Description,
   image1,
   image2,
 }) {
@@ -36,10 +32,7 @@ export default function PageWrapper({
             LOCATION: IN PERSON (DUBAI)
           </h4>
           <div className="text-xl font-normal font-secondary opacity-50 space-y-2">
-            <p className="mt-4 mb-6">{para1}</p>
-            <p>{para2}</p>
-            <p className="mt-6 mb-6">{para3}</p>
-            <p>{para4}</p>
+            <p className="mt-4 mb-6">{Description}</p>
           </div>
         </div>
         <div>
@@ -55,9 +48,6 @@ export default function PageWrapper({
           />
         </div>
         <BookNow />
-      </div>
-      <div className="m-20">
-        <Consultation />
       </div>
     </div>
   );

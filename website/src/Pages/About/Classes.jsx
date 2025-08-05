@@ -1,12 +1,30 @@
+import { NavLink, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../../Utils/api";
 import ArrowRow from "../../Components/ArrowRow";
-import women6 from "../../../images/women6.png";
-import women7 from "../../../images/women7.png";
-import women9 from "../../../images/women9.png";
-import women8 from "../../../images/women8.png";
 import Consultation from "../../Components/Consultation";
-import { Outlet, NavLink } from "react-router-dom";
 
 export default function Classes() {
+  const { slug } = useParams();
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/classes`);
+        setClasses(res.data.data);
+      } catch (error) {
+        alert("Error: " + (error.response?.data?.message || error.message));
+      }
+    };
+    fetchClasses();
+  }, [slug]);
+  if (!classes) return <div className="text-white text-xl">Loading...</div>;
+  const total = classes.length;
+  const mid = Math.ceil(total / 2);
+  const leftSlice = classes.slice(0, mid);
+  const rightSlice = classes.slice(mid);
   return (
     <div className="w-11/12 m-auto ">
       <div className="text-[var(--color-white)] font-primary">
@@ -17,48 +35,40 @@ export default function Classes() {
           </h2>
           <ArrowRow />
         </div>
-
-        <div className="flex">
-          <div className="w-1/2">
-            <img src={women6} alt="" className="w-[555px] h-[397px] m-4" />
-            <NavLink
-              to="strength-power-training"
-              className="text-[32px] font-[Hanson] underline font-bold m-4"
-            >
-              Strength Power <div className="ml-4">Training</div>
-            </NavLink>
+        {leftSlice.map((classes) => (
+          <div className="flex">
+            <div key={classes.id} className="w-1/2">
+              <img
+                src={`${BASE_URL}/${classes.classBanner}`}
+                alt=""
+                className="w-[555px] h-[397px] m-4"
+              />
+              <NavLink
+                to="strength-power-training"
+                className="text-[32px] font-[Hanson] underline font-bold m-4"
+              >
+                {classes.classTitle}
+              </NavLink>
+            </div>
           </div>
-          <div className="w-1/2">
-            <img src={women7} alt="" className="w-[555px] h-[397px] m-4" />
-            <NavLink
-              to="weight-loss-training"
-              className="text-[32px] font-[Hanson] underline font-bold m-4"
-            >
-              Weight Loss
-            </NavLink>
+        ))}
+        {rightSlice.map((classes) => (
+          <div className="flex">
+            <div key={classes.id} className="w-1/2">
+              <img
+                src={`${BASE_URL}/${classes.classBanner}`}
+                alt=""
+                className="w-[555px] h-[397px] m-4"
+              />
+              <NavLink
+                to="strength-power-training"
+                className="text-[32px] font-[Hanson] underline font-bold m-4"
+              >
+                {classes.classTitle}
+              </NavLink>
+            </div>
           </div>
-        </div>
-
-        <div className="flex">
-          <div className="w-1/2">
-            <img src={women8} alt="" className="w-[555px] h-[397px] m-4" />
-            <NavLink
-              to="functional-training"
-            className="text-[32px] font-[Hanson] underline font-bold m-4"
-            >
-              Functional Training
-            </NavLink>
-          </div>
-          <div className="w-1/2">
-            <img src={women9} alt="" className="w-[555px] h-[397px] m-4" />
-            <NavLink
-              to="online-training"
-            className="text-[32px] font-[Hanson] underline font-bold m-4"
-            >
-              Online Training
-            </NavLink>
-          </div>
-        </div>
+        ))}
       </div>
       <div className="m-20">
         <Consultation />

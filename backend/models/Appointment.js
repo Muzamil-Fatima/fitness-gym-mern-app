@@ -32,3 +32,4 @@ appointmentSchema.plugin(AutoIncrement, { inc_field: "appointmentId" });
 // create model
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 export default Appointment;
+

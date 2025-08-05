@@ -20,11 +20,12 @@ router.post(
   ]),
   createClasses
 );
-// get all services
+// get all classes
 router.get("/", getAllClasses);
 // get by id
 router.get("/:id", getClassById);
-// update services
+router.get("/slug/:slug", getClassById);
+// update classes
 router.put(
   "/:id",
   upload.fields([
@@ -34,8 +35,8 @@ router.put(
   ]),
   updateClass
 );
-// soft delete services
+// soft delete classes
 router.patch("/soft-delete/:id", softDeleteClass);
-// restore services
+// restore classes
 router.patch("/restore/:id", restoreClass);
 export default router;
