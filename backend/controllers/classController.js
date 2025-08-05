@@ -79,6 +79,19 @@ export const getClassById = async (req, res) => {
   }
 };
 
+export const getClassBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const singleClass = await Classes.findOne({ classSlug: slug });
+    if (!singleClass) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+    res.status(200).json({ data: singleClass });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch class", error: error.message });
+  }
+};
+
 // Update Class
 export const updateClass = async (req, res) => {
   try {

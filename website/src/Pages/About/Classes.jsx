@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../Utils/api";
@@ -6,7 +6,6 @@ import ArrowRow from "../../Components/ArrowRow";
 import Consultation from "../../Components/Consultation";
 
 export default function Classes() {
-  const { slug } = useParams();
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
@@ -19,12 +18,13 @@ export default function Classes() {
       }
     };
     fetchClasses();
-  }, [slug]);
-  if (!classes) return <div className="text-white text-xl">Loading...</div>;
+  }, []);
   const total = classes.length;
   const mid = Math.ceil(total / 2);
   const leftSlice = classes.slice(0, mid);
   const rightSlice = classes.slice(mid);
+  if (classes.length === 0)
+    return <div className="text-white text-xl">Loading...</div>;
   return (
     <div className="w-11/12 m-auto ">
       <div className="text-[var(--color-white)] font-primary">
@@ -35,40 +35,38 @@ export default function Classes() {
           </h2>
           <ArrowRow />
         </div>
-        {leftSlice.map((classes) => (
-          <div className="flex">
-            <div key={classes.id} className="w-1/2">
+        <div className="flex flex-wrap">
+          {leftSlice.map((cls) => (
+            <div key={cls.id} className="w-1/2">
               <img
-                src={`${BASE_URL}/${classes.classBanner}`}
+                src={`${BASE_URL}/${cls.classBanner}`}
                 alt=""
                 className="w-[555px] h-[397px] m-4"
               />
               <NavLink
-                to="strength-power-training"
+                to={`/training-classes/${cls.classSlug}`}
                 className="text-[32px] font-[Hanson] underline font-bold m-4"
               >
-                {classes.classTitle}
+                {cls.classTitle}
               </NavLink>
             </div>
-          </div>
-        ))}
-        {rightSlice.map((classes) => (
-          <div className="flex">
-            <div key={classes.id} className="w-1/2">
+          ))}
+          {rightSlice.map((cls) => (
+            <div key={cls.id} className="w-1/2">
               <img
-                src={`${BASE_URL}/${classes.classBanner}`}
+                src={`${BASE_URL}/${cls.classBanner}`}
                 alt=""
                 className="w-[555px] h-[397px] m-4"
               />
               <NavLink
-                to="strength-power-training"
+                to={`/training-classes/${cls.classSlug}`}
                 className="text-[32px] font-[Hanson] underline font-bold m-4"
               >
-                {classes.classTitle}
+                {cls.classTitle}
               </NavLink>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="m-20">
         <Consultation />

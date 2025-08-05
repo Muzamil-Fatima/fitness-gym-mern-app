@@ -30,11 +30,11 @@ function App() {
       {authIsOpen && <AuthModal onClose={() => setAuthIsOpen(false)} />}
       <Routes>
         <Route index element={<Home />} />
+        <Route path="training-classes/:slug" element={<PageWrapper />} />
         <Route path="about">
           <Route path="sessions" element={<SessionCard />} />
-          <Route path="training-classes" element={<Classes />} />
-          <Route path="training-classes/:slug" element={<PageWrapper />} />
           <Route path="lenka" element={<Lenka />} />
+          <Route path="training-classes" element={<Classes />} />
         </Route>
         <Route path="services" element={<MyServices />} />
         <Route path="services/:id" element={<ServicesDetails />} />

@@ -5,6 +5,7 @@ import {
   getAllClasses,
   softDeleteClass,
   getClassById,
+  getClassBySlug,
   updateClass,
   restoreClass,
 } from "../controllers/classController.js";
@@ -23,8 +24,8 @@ router.post(
 // get all classes
 router.get("/", getAllClasses);
 // get by id
+router.get("/slug/:slug", getClassBySlug);
 router.get("/:id", getClassById);
-router.get("/slug/:slug", getClassById);
 // update classes
 router.put(
   "/:id",

@@ -34,9 +34,6 @@ export default function MyServices() {
       </div>
       <div className="grid grid-cols-8 mt-3 font-secondary">
         <div className="col-span-3">
-    
-
-    
           {leftColumn.map((service) => (
             <div
               key={service.id}
