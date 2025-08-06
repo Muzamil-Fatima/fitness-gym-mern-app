@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import image from "../../images/sort-down.png";
 
-export default function DropDown({ availability }) {
+export default function DropDown({
+  availability,
+  selectSession,
+  setSelectSession,
+  sessionRef,
+}) {
   const [isOpen1, setIsOpen1] = useState(false);
-  const [selected, setSelected] = useState("Select any Option ");
   const options = [
     "12 sessions - AED 2210",
     "8 sessions - AED 1520",
@@ -30,8 +34,12 @@ export default function DropDown({ availability }) {
   return (
     <div className="font-medium text-xl flex gap-2 font-secondary">
       <div>
-        <div className="relative dropdown w-[370px] h-[55px] rounded-xl bg-[var(--color-darker)] flex justify-between items-center px-4">
-          {selected}
+        <div
+          ref={sessionRef}
+          tabIndex={0}
+          className="relative dropdown w-[370px] h-[55px] rounded-xl bg-[var(--color-darker)] flex justify-between items-center px-4"
+        >
+          {selectSession || "Select a session"}
           <img
             className={` w-6 h-6 cursor-pointer transition-transform duration-300 ${
               isOpen1 ? "rotate-180" : "rotate-0"
@@ -49,7 +57,7 @@ export default function DropDown({ availability }) {
                   className=" dropdown bg-[var(--color-darker)] w-[370px] px-4 py-3 hover:border-[var(--color-primary)] hover:border-2  border-dashed hover:rounded-2xl cursor-pointer"
                   key={index}
                   onClick={() => {
-                    setSelected(option);
+                    setSelectSession(option);
                     setIsOpen1(false);
                   }}
                 >

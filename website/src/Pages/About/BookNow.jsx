@@ -1,20 +1,34 @@
 import { useState } from "react";
 import CustomDate from "../../Components/CustomDate";
+import BookModel from "./BookModel";
 
-export default function BookNow() {
+export default function BookNow({ selectSession, sessionRef }) {
   const [book, setBook] = useState(false);
+  const [appointmentDetail, setAppointmentDetail] = useState(false)
   return (
-    <>
+    <div className="relative inline-block">
       <button
         className="hover:bg-transparent hover:border-2 hover:border-dashed hover:border-[var(--color-primary)] mt-6 font-secondary bg-[var(--color-primary)] w-56 h-[61px] text-white font-medium rounded-[50px]  transition duration-300"
-        onClick={() => setBook(true)}
+        onClick={() => {
+          if (!selectSession) {
+            alert("Please select a session first");
+            // focus dropdown after alert
+            setTimeout(() => {
+              sessionRef?.current?.scrollIntoView({ behavior: "smooth" });
+              sessionRef?.current?.focus?.();
+            }, 1000);
+          }
+          setBook(true);
+        }}
       >
         Book Session
       </button>
       {book && (
-        <div className="bg-[var(--color-primary)] h-24 flex justify-between rounded-2xl w-md pt-2 pb-3">
+        <div className=" absolute bottom-full mb-3  left-0 z-50 bg-[var(--color-primary)] h-24 flex justify-between rounded-2xl w-md pt-2 pb-3">
           <div className="flex items-center justify-center pl-6">
-            <CustomDate onClose={() => setBook(false)} />
+            <CustomDate 
+            onDateSelected={()=> setAppointmentDetail(true)}  
+            onClose={() => setBook(false)} />
           </div>
           <button onClick={() => setBook(false)} className=" flex relative">
             <svg
@@ -38,6 +52,7 @@ export default function BookNow() {
           </button>
         </div>
       )}
-    </>
+      {appointmentDetail && <BookModel onClose={() => setAppointmentDetail(false)} />}
+    </div>
   );
 }
